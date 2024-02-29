@@ -1,7 +1,8 @@
-import { StyleSheet, Button, View, TextInput, Text } from 'react-native';
+import { StyleSheet, View, Text } from 'react-native';
 import { Dropdown } from 'react-native-element-dropdown';
 import { useState, useEffect } from 'react';
 
+import Config from '../../Config';
 
 export default function SelectAuthenticatorAuthenticate(props) {
     const [authenticator, setAuthenticator] = useState('');
@@ -31,7 +32,7 @@ export default function SelectAuthenticatorAuthenticate(props) {
 
     return (
         <View style={styles.container}>
-            { props.primary && <Text style={styles.text} >Step: &lt;select-authenticator-authenticate&gt;</Text> }
+            { props.primary && <Text style={styles.text} >{props.config.showTitle ? props.config.titles.selectAuthenticatorAuthenticate : '' }</Text> }
             <View style={styles.container1}>
                 <Dropdown
                     style={styles.dropdown}
@@ -57,31 +58,5 @@ export default function SelectAuthenticatorAuthenticate(props) {
 }
   
 const styles = StyleSheet.create({
-     container: {
-        flex: 1,
-        padding: 20,
-        alignItems: 'center',
-    },
-    container1: {
-        width: '100%',
-        marginTop: 10
-    },
-    text: {
-        alignItems: 'flex-start',
-        margin: 15,
-        fontSize: 17
-    },
-    dropdown: {
-        margin: 16,
-        //height: 200,
-        //borderBottomColor: 'gray',
-        //borderBottomWidth: 0.5,
-        backgroundColor: 'powderblue',
-    },
-    placeholderStyle: {
-        fontSize: 15,
-    },
-    selectedTextStyle: {
-        fontSize: 16,
-    },
+    ...Config.styles
 });

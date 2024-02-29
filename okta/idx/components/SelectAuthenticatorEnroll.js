@@ -4,6 +4,10 @@ import { useEffect, useState } from 'react';
 import 'react-native-get-random-values';
 import { v4 as uuid } from 'uuid';
 
+import AppButton from './ui/AppButton';
+
+import Config from '../../Config';
+
 export default function SelectAuthenticatorEnroll(props) {
     const [components, setComponents] = useState(new Array());
 
@@ -17,8 +21,13 @@ export default function SelectAuthenticatorEnroll(props) {
         let c = new Array();
         props.authenticators.forEach(element => {
             c.push(
-                <View key={uuid()} style={styles.input} >
-                    <Button title={element.displayName} color={'powderblue'} onPress={() => { componentsHandler(element.id) } } />
+                <View key={uuid()} style={styles.container1} >
+                    {/* <Button title={element.displayName} color={'powderblue'} onPress={() => { componentsHandler(element.id) } } /> */}
+                    <AppButton 
+                        onPress={() => { componentsHandler(element.id) } } 
+                        title={element.displayName}
+                        styles={styles}
+                    />
                 </View>
             );
         });
@@ -28,34 +37,12 @@ export default function SelectAuthenticatorEnroll(props) {
 
     return (
         <View style={styles.container} >
-            <Text key={uuid()}style={styles.titleText} >Step: &lt;select-authenticator-enroll&gt;</Text>
+            <Text style={styles.text} >{props.config.showTitle ? props.config.titles.selectAuthenticatorEnroll : '' }</Text>
             {components}
         </View>
     );
 }
   
 const styles = StyleSheet.create({
-    container: {
-        padding: 10,
-        alignItems: 'stretch',
-        width: '100%'
-    },
-    input: {
-        justifyContent:'space-around',
-        alignItems: 'stretch',
-        padding: 5,
-        marginBottom: 3,
-        marginTop: 3,
-        paddingBottom: 3,
-        paddingTop: 3,
-        //flex: 1
-    },
-    titleText: {
-        alignItems: 'center',
-        textAlign: 'center',
-        margin: 15,
-        fontSize: 17,
-        justifyContent: 'space-evenly'
-    },
-    
-});
+    ...Config.styles
+ });

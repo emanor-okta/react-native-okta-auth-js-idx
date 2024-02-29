@@ -1,6 +1,9 @@
 import { StyleSheet, Button, View, TextInput, Text } from 'react-native';
 import { useEffect, useState } from 'react';
 
+import AppButton from './ui/AppButton';
+
+import Config from '../../Config';
 
 export default function EnrollAuthenticator(props) {
     //const [components, setComponents] = useState(new Array());
@@ -66,7 +69,7 @@ export default function EnrollAuthenticator(props) {
 */
     return (
         <View style={styles.container} >
-            <Text style={styles.titleText} >Step: &lt;enroll-authenticator&gt;</Text>
+            <Text style={styles.text} >{props.config.showTitle ? props.config.titles.enrollAuthenticator : '' }</Text>
             <View style={styles.input} >
                 <TextInput 
                     style={styles.textInput} 
@@ -76,58 +79,19 @@ export default function EnrollAuthenticator(props) {
                     value={passcode} 
                 />
             </View>
-            <Button title='Submit' color={'#3f8ad9'} onPress={submit} />
+            {/* <Button title='Submit' color={'#3f8ad9'} onPress={submit} /> */}
+            <View style={styles.container1}>
+                <AppButton 
+                    onPress={submit} 
+                    title='Submit'
+                    styles={styles}
+                />
+            </View>
         </View>
     );
 
 }
   
 const styles = StyleSheet.create({
-    
-    /*
-    container: {
-        //flex: 3,
-        padding: 10,
-        margin: 5,
-        alignItems: 'center',
-        width: '100%'
-    },
-    input: {
-        flexDirection: 'row',
-    },
-    text: {
-        alignItems: 'flex-start',
-        margin: 15,
-        fontSize: 17
-    },*/
-    textInput: {
-      width: '100%',
-      //marginRight: 8,
-      backgroundColor: 'powderblue',
-      textAlign: 'center',
-      height: 35
-    },
-    
-    container: {
-        padding: 10,
-        alignItems: 'stretch',
-        width: '100%'
-    },
-    input: {
-        justifyContent:'space-around',
-        alignItems: 'stretch',
-        //padding: 5,
-        marginBottom: 3,
-        marginTop: 3,
-        paddingBottom: 3,
-        paddingTop: 3,
-        //flex: 1
-    },
-    titleText: {
-        alignItems: 'center',
-        textAlign: 'center',
-        margin: 15,
-        fontSize: 17,
-        justifyContent: 'space-evenly'
-    },
+    ...Config.styles
 });

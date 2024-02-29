@@ -1,4 +1,4 @@
-import { StyleSheet, TextInput, Text } from 'react-native';
+import { TextInput } from 'react-native';
 import { useState } from 'react';
 
 
@@ -23,12 +23,3 @@ export default function String(props) {
     );
 }
   
-const styles = StyleSheet.create({
-    textInput: {
-      width: '100%',
-      //marginRight: 8,
-      backgroundColor: 'powderblue',
-      textAlign: 'center',
-      height: 35
-    },
-});

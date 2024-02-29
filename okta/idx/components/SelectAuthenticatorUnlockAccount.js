@@ -1,7 +1,10 @@
-import { StyleSheet, Button, View, TextInput, Text } from 'react-native';
+import { StyleSheet, View, TextInput, Text } from 'react-native';
 import { useState, useEffect } from 'react';
 import { Dropdown } from 'react-native-element-dropdown';
 
+import AppButton from './ui/AppButton';
+
+import Config from '../../Config';
 
 export default function SelectAuthenticatorUnlockAccount(props) {
     const [option, setOption] = useState('');
@@ -38,10 +41,11 @@ export default function SelectAuthenticatorUnlockAccount(props) {
 
     return (
         <View style={styles.container} >
-            { props.primary && <Text style={styles.text} >Step: &lt;{props.remediation.name}&gt;</Text> }
+            { props.primary && <Text style={styles.text} >{props.config.showTitle ? props.config.titles.selectAuthenticatorUnlockAccount : '' }</Text> }
             <View style={styles.input} >
             <TextInput style={styles.textInput} placeholder={props.remediation.inputs[0].label} onChangeText={setUsername} value={username} />
             </View>
+            <View style={styles.container1} >
             <Dropdown
                 style={styles.dropdown}
                 placeholderStyle={styles.placeholderStyle}
@@ -61,46 +65,19 @@ export default function SelectAuthenticatorUnlockAccount(props) {
                     handleUnlockSelection(item.value);
                 }}
             /> 
-            <Button title='Unlock' color={'#3f8ad9'} onPress={handleSubmit} />
+            </View>
+            {/* <Button title='Unlock' color={'#3f8ad9'} onPress={handleSubmit} /> */}
+            <View style={styles.container1} >
+            <AppButton 
+                    onPress={handleSubmit} 
+                    title='Unlock'
+                    styles={styles}
+            />
+            </View>
         </View>
     );
 }
   
 const styles = StyleSheet.create({
-    container: {
-        padding: 10,
-        margin: 5,
-        width: '100%'
-    },
-    text: {
-        alignItems: 'flex-start',
-        margin: 15,
-        fontSize: 17
-    },
-    textInput: {
-        width: '90%',
-        //alignItems: 'flex-end',
-        //flexDirection: 'row',
-        //flex: 1,
-        fontSize: 16,
-        //marginRight: 16,
-        margin: 15,
-        backgroundColor: 'powderblue',
-        textAlign: 'center'
-    },
-    input: {
-        flexDirection: 'row',
-        justifyContent: 'center',
-    },
-    dropdown: {
-        margin: 16,
-        width: '90%',
-        backgroundColor: 'powderblue',
-    },
-    placeholderStyle: {
-        fontSize: 15,
-    },
-    selectedTextStyle: {
-        fontSize: 16,
-    },
+    ...Config.styles
 });

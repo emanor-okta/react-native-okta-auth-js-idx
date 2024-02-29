@@ -7,7 +7,9 @@ import String from './fields/String';
 import Boolean from './fields/Boolean';
 import Choice from './fields/Choice';
 
+import AppButton from './ui/AppButton';
 
+import Config from '../../Config';
 
 export default function EnrollProfile(props) {
     const [components, setComponents] = useState(new Array());
@@ -41,7 +43,7 @@ export default function EnrollProfile(props) {
                         const placeHolder = `${element.name}${element.required ? ' *' : '' }`
 
                         return(
-                            <View style={styles.inputView}>
+                            <View style={styles.container1}>
                                 <Choice 
                                     attrName={element.name} 
                                     value={values[element.name] ? values[element.name] : ''} 
@@ -55,7 +57,7 @@ export default function EnrollProfile(props) {
                     }
                 } else {
                     return(
-                        <View style={styles.inputView}>
+                        <View style={styles.container1}>
                             <String 
                                 attrName={element.name} 
                                 value={values[element.name] ? values[element.name] : ''} 
@@ -119,69 +121,20 @@ export default function EnrollProfile(props) {
 
     return (
         <View style={styles.container} >
-            <Text style={styles.titleText} >Step: &lt;{props.remediation.name}&gt;</Text>
+            <Text style={styles.text} >{props.config.showTitle ? props.config.titles.enrollProfile : '' }</Text>
             {components}
             <View style={[styles.container1, {paddingTop: 20, }]} >
-                <Button title='Enroll' color={'#3f8ad9'} onPress={submit} />
+                {/* <Button title='Enroll' color={'#3f8ad9'} onPress={submit} /> */}
+                <AppButton 
+                    onPress={submit} 
+                    title='Enroll'
+                    styles={styles}
+                />
             </View>
         </View>
     );
 }
   
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        padding: 20,
-        alignItems: 'center',
-    },
-    container1: {
-        width: '100%',
-        marginTop: 10
-    },
-    input: {
-        flexDirection: 'row',
-        justifyContent:'space-around',
-        alignItems: 'center',
-        padding: 5,
-        marginLeft: 20,
-        marginRight: 20
-        //flex: 2
-    },
-    titleText: {
-        alignItems: 'center',
-        textAlign: 'center',
-        margin: 15,
-        fontSize: 17,
-        justifyContent: 'space-evenly'
-    },
-    text: {
-        fontSize: 15
-    },
-    textInput: {
-        width: '100%',
-        //marginRight: 8,
-        backgroundColor: 'powderblue',
-        textAlign: 'center',
-        height: 35
-     },
-    dropdown: {
-        //margin: 16,
-        width: '100%',
-        backgroundColor: 'powderblue',
-        borderColor: 'aliceblue',
-        borderTopWidth: 3,
-        borderBottomWidth: 3,
-    },
-    placeholderStyle: {
-        fontSize: 15,
-    },
-    selectedTextStyle: {
-        fontSize: 15,
-    },
-    inputView: {
-        justifyContent:'space-around',
-        alignItems: 'stretch',
-        padding: 5,
-        flexDirection: 'row',
-    },
+    ...Config.styles
 });

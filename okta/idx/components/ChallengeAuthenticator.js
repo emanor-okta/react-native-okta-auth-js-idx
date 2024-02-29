@@ -1,6 +1,8 @@
-import { StyleSheet, Button, View, TextInput, Text } from 'react-native';
+import { StyleSheet, View, TextInput, Text } from 'react-native';
 import { useState } from 'react';
 
+import AppButton from './ui/AppButton';
+import Config from '../../Config';
 
 export default function ChallengeAuthenticator(props) {
     const [passcode, setPasscode] = useState('');
@@ -11,15 +13,14 @@ export default function ChallengeAuthenticator(props) {
 
     function submit() {
         const code = passcode;
-        setPasscode('');
-        props.proceed({ step: 'challenge-authenticator', credentials: { passcode: code } });
+        //setPasscode('');
+        props.proceed({ step: 'challenge-authenticator', credentials: { passcode: code } }, false);
     }
 
     const placeholder = `${props.remediation.inputs[0].label} from ${props.remediation.type}`;
-    console.log(placeholder)
     return (
         <View style={styles.container} >
-            <Text style={styles.text} >Step: &lt;challenge-authenticator&gt;</Text>
+            <Text style={styles.text} >{props.config.showTitle ? props.config.titles.challengeAuthenticator : '' }</Text>
             <TextInput 
                 style={styles.textInput} 
                 secureTextEntry={true} 
@@ -28,35 +29,17 @@ export default function ChallengeAuthenticator(props) {
                 onChangeText={passcodeHandler}
             />
             <View style={styles.container1}>
-                <Button title='Submit' color={'#3f8ad9'} onPress={submit} />
+                {/* <Button title='Submit' color={'#3f8ad9'} onPress={submit} /> */}
+                <AppButton 
+                    onPress={submit} 
+                    title='Submit'
+                    styles={styles}
+                />
             </View>
         </View>
     );
 }
   
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        padding: 20,
-        alignItems: 'center',
-    },
-    container1: {
-        width: '100%',
-        marginTop: 10
-    },
-    input: {
-        flexDirection: 'row',
-    },
-    text: {
-        alignItems: 'flex-start',
-        margin: 15,
-        fontSize: 17
-    },
-    textInput: {
-      width: '100%',
-      //marginRight: 8,
-      backgroundColor: 'powderblue',
-      textAlign: 'center',
-      height: 35
-    },
+    ...Config.styles
 });

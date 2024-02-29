@@ -35,12 +35,3 @@ export default function Choice(props) {
     );
 }
   
-const styles = StyleSheet.create({
-    textInput: {
-      width: '100%',
-      //marginRight: 8,
-      backgroundColor: 'powderblue',
-      textAlign: 'center',
-      height: 35
-    },
-});

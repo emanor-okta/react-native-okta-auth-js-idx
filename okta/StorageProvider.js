@@ -53,6 +53,7 @@ class StorageProvider {
         if (value !== null) {
             // We have data!!
             console.log('getItem key->' + key); // + ', value->' + value);
+            // console.log(value);
             return value;
         } else {
             console.log('getItem key->' + key + ', returns NOTHING');
@@ -68,8 +69,26 @@ class StorageProvider {
     setItem(key, val) {
         try {
         //await AsyncStorage.setItem(key, val);
-        this.memoryStorage.set(key, val);
+        // this.memoryStorage.set(key, val);
         console.log('setItem key->' + key); // + ', val->' + val);
+        // console.log(val)
+       
+       // hack ? - https://github.com/okta/okta-auth-js/blob/8eaa6b9d839d2f167c5ba94e40916e4d48415da2/lib/idx/storage.ts#L23
+       // in browser okta-idx-response-storage is memory store. When browser redirects to social and back with 
+       // &error=interaction_required&error_description=Your+client+is+configured+to+use+the+interaction+code+flow+and+user+interaction+is+required+to+complete+the+request
+       // memory storage will be clean and auth-js will do /introspect and get the next remediation steps
+       // without browser okta-idx-response-storage will still contain the prior idx response since there is no page refresh which wipes
+       // this on the redirect back from IdP. It seems when auth-js loads this it won't make a /introspect call but rather will
+       // just re-use the prior response with the old remediation values 
+        var j = JSON.parse(val)
+        //console.log(JSON.stringify(j, '', '  '))
+        if (key === 'okta-transaction-storage') {
+            j['okta-idx-response-storage'] = '';
+            // val = JSON.stringify(j, '', '')
+        }
+        //console.log(val);
+        this.memoryStorage.set(key, val);
+        
 
         AsyncStorage.setItem(key, val)
         .then( result => {
